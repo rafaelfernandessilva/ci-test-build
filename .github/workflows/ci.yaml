@@ -1,4 +1,6 @@
 name: "CI"  
+run-name: "${{ github.event.repository.name }} | Lint & Scan Security "
+
 on:
    push:
      branches:
