@@ -2,12 +2,10 @@ name: ""
 run-name: ${{ github.event.repository.name }}_${{ github.run_number }}_${{ github.run_attempt }}
 
 on:
-   workflow_dispatch:
-    inputs:
-      :
-        description: 'Informe nome do cluster'
-        required: true
-        type: string
+   push:
+     branches:
+       - main
+      
 
 permissions:
   id-token: write
