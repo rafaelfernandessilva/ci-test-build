@@ -1,0 +1,42 @@
+name: ""  
+run-name: ${{ github.event.repository.name }}_${{ github.run_number }}_${{ github.run_attempt }}
+
+on:
+   workflow_dispatch:
+    inputs:
+      :
+        description: 'Informe nome do cluster'
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+  
+jobs:
+    
+    lint_dockerfile:
+      name: Lint Dockerfile
+      runs-on: ubuntu-22.04
+      
+      steps:
+        - name: "Checkout"
+          uses: actions/checkout@v4
+        - uses: hadolint/hadolint-action@v3.1.0
+          with:
+            dockerfile: Dockerfile
+    
+    
+    trivy:
+      name: trivy
+      runs-on: ubuntu-22.04
+      depends-on: lint_dockerfile
+      
+      steps:
+        - name: "Checkout"
+          uses: actions/checkout@v4
+       
+        
+
+        
