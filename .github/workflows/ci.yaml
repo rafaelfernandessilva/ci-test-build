@@ -1,6 +1,4 @@
 name: "CI"  
-run-name: ${{ github.event.repository.name }}_${{ github.run_number }}
-
 on:
    push:
      branches:
@@ -27,7 +25,7 @@ jobs:
     
     
     trivy:
-      name: trivy
+      name: Trivy Scan Security
       runs-on: ubuntu-22.04
       needs: lint_dockerfile
       
@@ -40,7 +38,7 @@ jobs:
           with:
             scan-type: 'fs'
             scan-ref: '.'
-            severity: 'CRITICAL'
+            severity: 'HIGH,CRITICAL'
             format: 'table'
             exit-code: 1
             
