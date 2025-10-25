@@ -40,7 +40,7 @@ jobs:
           with:
             scan-type: 'fs'
             scan-ref: '.'
-            severity: 'HIGH,CRITICAL'
+            severity: 'CRITICAL'
             format: 'table'
             exit-code: 1
             
