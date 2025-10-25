@@ -1,5 +1,5 @@
-name: ""  
-run-name: ${{ github.event.repository.name }}_${{ github.run_number }}_${{ github.run_attempt }}
+name: "CI"  
+run-name: ${{ github.event.repository.name }}_${{ github.run_number }}
 
 on:
    push:
@@ -43,6 +43,6 @@ jobs:
             severity: 'HIGH,CRITICAL'
             format: 'table'
             exit-code: 1
-            fail-on: 'high'
+            
 
         
