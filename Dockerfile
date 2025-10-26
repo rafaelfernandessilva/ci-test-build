@@ -1,4 +1,4 @@
-FROM golang:1.25 AS builder
+FROM golang:1.25-alpine AS builder
 
 WORKDIR /root/src/app
 
@@ -10,20 +10,16 @@ COPY . /root/src/app
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
-FROM  golang:1.25-alpine
+FROM  alpine:3.22.2
 
-# Criar usuário não-root
 RUN addgroup -g 1001 -S nonroot && \
     adduser -u 1001 -S nonroot -G nonroot
 
-# Criar diretório da aplicação
 WORKDIR /app
 
-# Copiar binário e definir permissões
 COPY --from=builder /root/src/app/main ./
 RUN chown nonroot:nonroot /app/main
 
-# Mudar para usuário não-root
 USER nonroot
 
 EXPOSE 8080
