@@ -21,9 +21,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.8.1'
+          cache: 'npm'
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm ci
+          npm install -g semantic-release
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+        run: semantic-release
