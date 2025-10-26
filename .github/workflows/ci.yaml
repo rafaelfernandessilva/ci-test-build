@@ -54,6 +54,9 @@ jobs:
     build-and-push-image:
       runs-on: ubuntu-latest
       needs: [trivy, lint_dockerfile]
+      outputs:
+        image-digest: ${{ steps.push.outputs.digest }}
+        image-tags: ${{ steps.meta.outputs.tags }}
       steps:
         - name: Checkout repository
           uses: actions/checkout@v5
