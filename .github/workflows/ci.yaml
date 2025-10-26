@@ -82,5 +82,16 @@ jobs:
             subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
             subject-digest: ${{ steps.push.outputs.digest }}
             push-to-registry: true
-        
+    
+    output:
+      runs-on: ubuntu-latest
+      needs: build-and-push-image
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v5
+        - name: Output
+          run: |
+            echo "Docker image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}"
+            echo "Digest: ${{ steps.push.outputs.digest }}"
+            echo "Attestation: ${{ steps.push.outputs.attestation }}"
       
