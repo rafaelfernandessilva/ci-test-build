@@ -130,7 +130,7 @@ jobs:
           id: meta
           uses: docker/metadata-action@v4
           env:
-              AWS_ECR_URL: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+              AWS_ECR_URL: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
           with:
               images: ${{ env.AWS_ECR_URL }}/${{ env.APP_NAME }}
               tags: |
@@ -160,6 +160,6 @@ jobs:
             token: ${{ secrets.GHCR_TOKEN }}
             repository: ${{ github.repository }}
             event-type: deploy-ci-test-build
-            client-payload: '{"environment": "${{ github.event.inputs.environment || ''development'' }}", "image-digest": "${{ needs.build-and-push-image.outputs.image-digest }}", "image-tags": "${{ needs.build-and-push-image.outputs.image-tags }}", "release": "${{ github.release.tag || ''none'' }}"}'
+            client-payload: '{"environment": "${{ github.event.inputs.environment || ''development'' }}", "image-digest": "${{ needs.build-and-push-image.outputs.image-digest }}", "image-tags": "${{ needs.build-and-push-image.outputs.image-tags }}", "release": "${{ github.ref_name }}"}'
         
 
