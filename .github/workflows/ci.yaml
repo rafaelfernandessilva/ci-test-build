@@ -111,7 +111,7 @@ jobs:
       environment:
         name: ${{ github.event.inputs.environment || 'development' }}
       outputs:
-        image-digest: ${{ steps.push.outputs.digest }}
+        image-digest: ${{ steps.push.outputs.labels }}
         image-tags: ${{ steps.meta.outputs.tags }}
       steps:
         - name: Checkout repository
@@ -160,6 +160,6 @@ jobs:
             token: ${{ secrets.GHCR_TOKEN }}
             repository: ${{ github.repository }}
             event-type: deploy-ci-test-build
-            client-payload: '{"environment": "${{ github.event.inputs.environment || ''development'' }}", "image-digest": "${{ needs.build-and-push-image.outputs.image-digest }}", "image-tags": "${{ needs.build-and-push-image.outputs.image-tags }}"}'
+            client-payload: '{"environment": "${{ github.event.inputs.environment || ''development'' }}", "image-digest": "${{ needs.build-and-push-image.meta.outputs.labels }}", "image-tags": "${{ needs.build-and-push-image.meta.outputs.tags }}"}'
         
 
