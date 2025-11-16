@@ -160,6 +160,6 @@ jobs:
             token: ${{ secrets.GHCR_TOKEN }}
             repository: ${{ github.repository }}
             event-type: deploy-ci-test-build
-            client-payload: '{"environment": "${{ github.event.inputs.environment || ''development'' }}", "image-digest": "${{ needs.build-and-push-image.outputs.image-digest }}", "image-tags": "${{ needs.build-and-push-image.outputs.image-tags }}", "release": "${{ github.ref_name }}"}'
+            client-payload: '{"environment": "${{ github.event.inputs.environment || ''development'' }}", "image-digest": "${{ needs.build-and-push-image.outputs.image-digest }}", "image-tags": ${{ toJSON(needs.build-and-push-image.outputs.image-tags) }}, "release": "${{ github.ref_name }}"}'
         
 
