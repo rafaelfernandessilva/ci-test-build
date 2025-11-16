@@ -63,7 +63,9 @@ jobs:
 
     check-ecr:
       runs-on: ubuntu-latest
-      needs: trivy
+      needs: [trivy, lint_dockerfile]
+      environment:
+        name: ${{ github.event.inputs.environment || 'development' }}
       steps:
         - name: Checkout repository
           uses: actions/checkout@v5
@@ -105,6 +107,8 @@ jobs:
     build-and-push-image:
       runs-on: ubuntu-latest
       needs: [trivy, lint_dockerfile, check-ecr]
+      environment:
+        name: ${{ github.event.inputs.environment || 'development' }}
       outputs:
         image-digest: ${{ steps.push.outputs.digest }}
         image-tags: ${{ steps.meta.outputs.tags }}
