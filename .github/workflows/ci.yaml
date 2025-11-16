@@ -145,5 +145,18 @@ jobs:
               tags: ${{ steps.meta.outputs.tags }}
               labels: ${{ steps.meta.outputs.labels }}
               push: ${{ github.event_name != 'pull_request' }}
+    
+    repository-dispatch:
+      name: Trigger Deployment Workflow
+      runs-on: ubuntu-latest
+      needs: build-and-push-image
+      steps:
+        - name: Trigger deployment workflow
+          uses: peter-evans/repository-dispatch@v4
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            repository: ${{ github.repository }}
+            event-type: deploy-ci-test-build
+            client-payload: '{"environment": "${{ github.event.inputs.environment || "development" }}", "image-tags": "${{ needs.build-and-push-image.outputs.image-tags }}", "image-digest": "${{ needs.build-and-push-image.outputs.image-digest }}"}'
         
 
