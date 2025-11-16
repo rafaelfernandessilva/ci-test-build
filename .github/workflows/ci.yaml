@@ -133,7 +133,7 @@ jobs:
           env:
               AWS_ECR_URL: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
           with:
-              images: ${{ env.AWS_ECR_URL }}/${{ secrets.AWS_ID }}
+              images: ${{ env.AWS_ECR_URL }}/${{ env.APP_NAME }}
               tags: |
                   type=ref,event=tag
                   type=sha,prefix=,format=long
