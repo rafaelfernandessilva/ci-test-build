@@ -81,7 +81,7 @@ jobs:
         - name: Check ECR 
           run: |
             echo "BUILD - LOGIN ECR"
-            aws ecr get-login-password --region ${{ env.AWS_REGION}} | docker login --username AWS --password-stdin 339712783076.dkr.ecr.${{ env.AWS_REGION}}.amazonaws.com
+            aws ecr get-login-password --region ${{ env.AWS_REGION}} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION}}.amazonaws.com
 
             echo "BUILD - CREATEECR IF NOT EXISTS"
 
