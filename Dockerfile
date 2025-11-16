@@ -18,8 +18,10 @@ RUN addgroup -g 1001 -S nonroot && \
 WORKDIR /app
 
 COPY --from=builder /root/src/app/main ./
-RUN chown nonroot:nonroot /app/main
-RUN apk add curl
+# hadolint ignore=DL3018
+RUN chown nonroot:nonroot /app/main && \
+    apk add curl --no-cache
+
 
 USER nonroot
 
