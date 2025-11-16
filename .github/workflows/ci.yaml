@@ -48,8 +48,6 @@ jobs:
     trivy:
       name: Trivy Scan Security
       runs-on: ubuntu-22.04
-      needs: lint_dockerfile
-      
       steps:
         - name: "Checkout"
           uses: actions/checkout@v5
