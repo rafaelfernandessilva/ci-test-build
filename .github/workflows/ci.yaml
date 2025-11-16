@@ -157,6 +157,6 @@ jobs:
             token: ${{ secrets.GITHUB_TOKEN }}
             repository: ${{ github.repository }}
             event-type: deploy-ci-test-build
-            client-payload: '{"environment": "${{ github.event.inputs.environment || "development" }}"}'
+            client-payload: '{"environment": "${{ github.event.inputs.environment || ''development'' }}"}'
         
 
