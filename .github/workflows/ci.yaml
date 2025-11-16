@@ -25,6 +25,7 @@ permissions:
   contents: read
   packages: write
   
+  
 env:
   IMAGE_NAME: ${{ github.repository }}
   APP_NAME: ci-test-build
@@ -150,6 +151,8 @@ jobs:
       name: Trigger Deployment Workflow
       runs-on: ubuntu-latest
       needs: build-and-push-image
+      environment:
+        name: ${{ github.event.inputs.environment || 'development' }}
       steps:
         - name: Trigger deployment workflow
           uses: peter-evans/repository-dispatch@v4
@@ -157,6 +160,6 @@ jobs:
             token: ${{ secrets.GITHUB_TOKEN }}
             repository: ${{ github.repository }}
             event-type: deploy-ci-test-build
-            client-payload: '{"environment": "${{ github.event.inputs.environment || ''development'' }}"}'
+            client-payload: '{"environment": "${{ github.event.inputs.environment || ''development'' }}", "image-digest": "${{ needs.build-and-push-image.outputs.image-digest }}", "image-tags": "${{ needs.build-and-push-image.outputs.image-tags }}"}'
         
 
