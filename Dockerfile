@@ -19,6 +19,7 @@ WORKDIR /app
 
 COPY --from=builder /root/src/app/main ./
 RUN chown nonroot:nonroot /app/main
+RUN apk add curl
 
 USER nonroot
 
