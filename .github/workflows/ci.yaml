@@ -70,7 +70,7 @@ jobs:
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@master
           with:
-            aws-region: ${{ secrets.REGION }}
+            aws-region: "us-east-1"
             role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
             role-session-name: ${{ github.event.repository.name }}_${{ env.GITHUB_WORKFLOW }}_${{ github.run_number }}_${{ github.run_attempt }}
             role-duration-seconds: 1800
