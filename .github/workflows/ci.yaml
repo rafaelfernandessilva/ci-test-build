@@ -2,12 +2,9 @@ name: "CI"
 run-name: "${{ github.event.repository.name }} | Lint & Scan Security | Build & Push Image"
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-      - 'release/*'
-    tags:
-      - 'v*.*.*'
   workflow_dispatch:
     inputs:
       environment:
