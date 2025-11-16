@@ -28,6 +28,8 @@ permissions:
 env:
   IMAGE_NAME: ${{ github.repository }}
   APP_NAME: ci-test-build
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   
 jobs:
     
@@ -72,14 +74,14 @@ jobs:
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@master
           with:
-            aws-region: "us-east-1"
+            aws-region: env.AWS_REGION
             role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
             role-session-name: ${{ github.event.repository.name }}_${{ env.GITHUB_WORKFLOW }}_${{ github.run_number }}_${{ github.run_attempt }}
             role-duration-seconds: 1800
         - name: Check ECR 
           run: |
             echo "BUILD - LOGIN ECR"
-            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 339712783076.dkr.ecr.us-east-1.amazonaws.com
+            aws ecr get-login-password --region ${{ env.AWS_REGION}} | docker login --username AWS --password-stdin 339712783076.dkr.ecr.${{ env.AWS_REGION}}.amazonaws.com
 
             echo "BUILD - CREATEECR IF NOT EXISTS"
 
